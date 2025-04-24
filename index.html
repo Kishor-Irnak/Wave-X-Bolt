@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blogger</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/lucide-static@latest/font/lucide.css" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              200: '#bae6fd',
+              300: '#7dd3fc',
+              400: '#38bdf8',
+              500: '#0ea5e9',
+              600: '#0284c7',
+              700: '#0369a1',
+              800: '#075985',
+              900: '#0c4a6e',
+            },
+            secondary: {
+              50: '#f5f3ff',
+              100: '#ede9fe',
+              200: '#ddd6fe',
+              300: '#c4b5fd',
+              400: '#a78bfa',
+              500: '#8b5cf6',
+              600: '#7c3aed',
+              700: '#6d28d9',
+              800: '#5b21b6',
+              900: '#4c1d95',
+            },
+            accent: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              200: '#bbf7d0',
+              300: '#86efac',
+              400: '#4ade80',
+              500: '#22c55e',
+              600: '#16a34a',
+              700: '#15803d',
+              800: '#166534',
+              900: '#14532d',
+            },
+            error: {
+              50: '#fef2f2',
+              100: '#fee2e2',
+              200: '#fecaca',
+              300: '#fca5a5',
+              400: '#f87171',
+              500: '#ef4444',
+              600: '#dc2626',
+              700: '#b91c1c',
+              800: '#991b1b',
+              900: '#7f1d1d',
+            },
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    [data-icon] {
+      display: inline-block;
+      width: 1em;
+      height: 1em;
+      stroke-width: 0;
+      stroke: currentColor;
+      fill: currentColor;
+    }
+    .dark {
+      color-scheme: dark;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 min-h-screen">
+  <!-- Navbar -->
+  <nav class="bg-white dark:bg-gray-900 shadow-sm sticky top-0 z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16">
+        <div class="flex items-center">
+          <a href="/" class="flex-shrink-0 flex items-center">
+            <span class="text-2xl font-semibold text-primary-600 dark:text-primary-400">Blogger</span>
+          </a>
+          <div class="hidden md:ml-6 md:flex md:space-x-8">
+            <a href="/" class="inline-flex items-center px-1 pt-1 text-gray-700 dark:text-gray-200 hover:text-primary-600 dark:hover:text-primary-400">
+              Home
+            </a>
+            <a href="/categories" class="inline-flex items-center px-1 pt-1 text-gray-700 dark:text-gray-200 hover:text-primary-600 dark:hover:text-primary-400">
+              Categories
+            </a>
+            <a href="/trending" class="inline-flex items-center px-1 pt-1 text-gray-700 dark:text-gray-200 hover:text-primary-600 dark:hover:text-primary-400">
+              Trending
+            </a>
+            <a href="/bookmarks" class="inline-flex items-center px-1 pt-1 text-gray-700 dark:text-gray-200 hover:text-primary-600 dark:hover:text-primary-400">
+              Bookmarks
+            </a>
+          </div>
+        </div>
+
+        <div class="hidden md:flex items-center">
+          <form class="mr-4">
+            <div class="relative">
+              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <i data-icon="search" class="h-5 w-5 text-gray-400"></i>
+              </div>
+              <input
+                type="search"
+                placeholder="Search posts..."
+                class="pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-primary-500"
+              />
+            </div>
+          </form>
+
+          <button
+            class="p-2 rounded-md text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 focus:outline-none"
+            aria-label="Toggle dark mode"
+          >
+            <i data-icon="sun" class="h-5 w-5"></i>
+          </button>
+
+          <div class="ml-3 relative flex space-x-2">
+            <a href="/new-post">
+              <button class="inline-flex items-center justify-center font-medium rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500 text-base px-4 py-2">
+                <i data-icon="pen-square" class="h-4 w-4 mr-2"></i>
+                Write
+              </button>
+            </a>
+
+            <div class="flex items-center">
+              <a href="/profile" class="flex items-center">
+                <div class="h-8 w-8 rounded-full bg-primary-100 dark:bg-primary-900 flex items-center justify-center">
+                  <span class="text-primary-700 dark:text-primary-300 text-sm font-medium">U</span>
+                </div>
+              </a>
+              <button
+                class="ml-2 p-1 rounded-full text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
+                aria-label="Log out"
+              >
+                <i data-icon="log-out" class="h-5 w-5"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center md:hidden">
+          <button
+            class="p-2 rounded-md text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 focus:outline-none mr-2"
+            aria-label="Toggle dark mode"
+          >
+            <i data-icon="sun" class="h-5 w-5"></i>
+          </button>
+          <button
+            class="inline-flex items-center justify-center p-2 rounded-md text-gray-600 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none"
+            aria-label="Main menu"
+          >
+            <i data-icon="menu" class="block h-6 w-6"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Login Form Example -->
+    <div class="max-w-md w-full mx-auto p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md">
+      <h2 class="text-2xl font-bold text-center text-gray-900 dark:text-white mb-6">
+        Log in to your account
+      </h2>
+      
+      <div class="bg-error-50 dark:bg-error-900/30 border border-error-200 dark:border-error-800 text-error-800 dark:text-error-200 p-3 rounded-md mb-4">
+        Invalid email or password
+      </div>
+      
+      <form class="space-y-4">
+        <div class="w-full">
+          <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            Email
+          </label>
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500 dark:text-gray-400">
+              <i data-icon="mail" class="h-5 w-5"></i>
+            </div>
+            <input 
+              id="email" 
+              type="email" 
+              placeholder="you@example.com" 
+              class="w-full rounded-md shadow-sm border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 pl-10 pr-4 py-2 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 dark:focus:ring-primary-400 dark:focus:border-primary-400 transition duration-150 ease-in-out" 
+              required
+            />
+          </div>
+        </div>
+        
+        <div>
+          <div class="w-full">
+            <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              Password
+            </label>
+            <div class="relative">
+              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500 dark:text-gray-400">
+                <i data-icon="lock" class="h-5 w-5"></i>
+              </div>
+              <input 
+                id="password" 
+                type="password" 
+                placeholder="••••••••" 
+                class="w-full rounded-md shadow-sm border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 pl-10 pr-4 py-2 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 dark:focus:ring-primary-400 dark:focus:border-primary-400 transition duration-150 ease-in-out" 
+                required
+              />
+            </div>
+          </div>
+          <div class="flex justify-end mt-1">
+            <button
+              type="button"
+              class="text-sm text-primary-600 dark:text-primary-400 hover:underline"
+            >
+              Forgot Password?
+            </button>
+          </div>
+        </div>
+        
+        <button
+          type="submit"
+          class="inline-flex items-center justify-center font-medium rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500 text-base px-4 py-2 w-full"
+        >
+          Log in
+        </button>
+      </form>
+      
+      <div class="mt-4 flex items-center justify-between">
+        <hr class="w-full border-gray-300 dark:border-gray-600" />
+        <span class="px-4 text-sm text-gray-500 dark:text-gray-400">or</span>
+        <hr class="w-full border-gray-300 dark:border-gray-600" />
+      </div>
+      
+      <button
+        class="inline-flex items-center justify-center font-medium rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 border border-gray-300 dark:border-gray-600 bg-transparent text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 focus:ring-gray-500 text-base px-4 py-2 w-full mt-4"
+      >
+        <svg class="w-5 h-5 mr-2" viewBox="0 0 24 24">
+          <path
+            fill="currentColor"
+            d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+          />
+          <path
+            fill="currentColor"
+            d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+          />
+          <path
+            fill="currentColor"
+            d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
+          />
+          <path
+            fill="currentColor"
+            d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+          />
+          <path fill="none" d="M1 1h22v22H1z" />
+        </svg>
+        Continue with Google
+      </button>
+      
+      <p class="mt-4 text-center text-sm text-gray-600 dark:text-gray-400">
+        Don't have an account?{' '}
+        <a href="/signup" class="text-primary-600 dark:text-primary-400 hover:underline">
+          Sign up
+        </a>
+      </p>
+    </div>
+
+    <!-- Post Card Example -->
+    <div class="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="bg-white dark:bg-gray-800 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 shadow-sm transition-shadow duration-300 hover:shadow-lg">
+        <a href="/post/1" class="block">
+          <img 
+            src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80" 
+            alt="Post title" 
+            class="w-full h-48 object-cover"
+          />
+        </a>
+        <div class="p-4 flex-grow">
+          <div class="flex items-center mb-2">
+            <a href="/user/1" class="flex items-center hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+              <div class="w-8 h-8 rounded-full bg-primary-100 dark:bg-primary-900 flex items-center justify-center mr-2">
+                <span class="text-primary-700 dark:text-primary-300 text-sm font-medium">J</span>
+              </div>
+              <span class="text-sm font-medium text-gray-600 dark:text-gray-400">
+                John Doe
+              </span>
+            </a>
+            <span class="mx-2 text-gray-400">•</span>
+            <span class="text-xs text-gray-500 dark:text-gray-400">
+              Jun 12, 2023
+            </span>
+          </div>
+          
+          <a href="/post/1" class="block group">
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
+              How to Build a Modern Web Application
+            </h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mb-4 line-clamp-3">
+              Learn the best practices for building modern web applications with React, Tailwind CSS, and Firebase...
+            </p>
+          </a>
+          
+          <div class="flex items-center text-sm text-gray-500 dark:text-gray-400">
+            <span class="inline-flex items-center mr-4">
+              <span class="px-2 py-1 text-xs rounded-full bg-gray-100 dark:bg-gray-800">
+                technology
+              </span>
+            </span>
+            <span class="mr-4">5 min read</span>
+          </div>
+        </div>
+        
+        <div class="px-4 py-3 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between">
+          <div class="flex space-x-4">
+            <button 
+              class="flex items-center text-sm text-gray-500 dark:text-gray-400 hover:text-error-600 dark:hover:text-error-400 transition-colors"
+              aria-label="Like"
+            >
+              <i data-icon="heart" class="h-4 w-4 mr-1"></i>
+              <span>24</span>
+            </button>
+            
+            <a 
+              href="/post/1#comments"
+              class="flex items-center text-sm text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+            >
+              <i data-icon="message-square" class="h-4 w-4 mr-1"></i>
+              <span>5</span>
+            </a>
+          </div>
+          
+          <div class="flex space-x-2">
+            <button
+              class="p-1 rounded-full text-gray-500 dark:text-gray-400 hover:text-accent-500 dark:hover:text-accent-400 transition-colors"
+              aria-label="Bookmark"
+            >
+              <i data-icon="bookmark" class="h-4 w-4"></i>
+            </button>
+            
+            <button
+              class="p-1 rounded-full text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+              aria-label="Share"
+            >
+              <i data-icon="share-2" class="h-4 w-4"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Create Post Form Example -->
+    <div class="mt-12 max-w-3xl mx-auto p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md">
+      <h2 class="text-2xl font-bold text-center text-gray-900 dark:text-white mb-6">
+        Create a New Post
+      </h2>
+      
+      <form class="space-y-6">
+        <div class="space-y-1">
+          <label for="title" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            Title
+          </label>
+          <input
+            id="title"
+            type="text"
+            placeholder="Enter a captivating title"
+            class="w-full rounded-md border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 shadow-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+            required
+          />
+        </div>
+        
+        <div class="space-y-1">
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            Cover Image
+          </label>
+          <div 
+            class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-dashed rounded-md cursor-pointer transition-colors border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500"
+          >
+            <div class="space-y-1 text-center">
+              <i data-icon="image-plus" class="mx-auto h-12 w-12 text-gray-400"></i>
+              <div class="flex text-sm text-gray-600 dark:text-gray-400">
+                <p class="pl-1">Upload a cover image for your post</p>
+                <input 
+                  id="coverImage" 
+                  name="coverImage" 
+                  type="file" 
+                  class="sr-only" 
+                  accept="image/*"
+                />
+              </div>
+              <p class="text-xs text-gray-500 dark:text-gray-400">
+                PNG, JPG, GIF up to 10MB
+              </p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="space-y-1">
+          <label for="category" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            Category
+          </label>
+          <select
+            id="category"
+            class="w-full rounded-md border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 shadow-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+          >
+            <option value="">Select a category</option>
+            <option value="technology">Technology</option>
+            <option value="design">Design</option>
+            <option value="business">Business</option>
+            <option value="lifestyle">Lifestyle</option>
+            <option value="health">Health</option>
+            <option value="productivity">Productivity</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        
+        <div class="space-y-1">
+          <label for="tags" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            Tags
+          </label>
+          <div class="flex flex-wrap items-center gap-2 p-2 border border-gray-300 dark:border-gray-600 rounded-md">
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary-100 dark:bg-primary-900 text-primary-800 dark:text-primary-200">
+              react
+              <button
+                type="button"
+                class="ml-1.5 inline-flex text-primary-400 dark:text-primary-600 hover:text-primary-600 dark:hover:text-primary-400 focus:outline-none"
+              >
+                &times;
+              </button>
+            </span>
+            <input
+              type="text"
+              class="flex-grow min-w-[8rem] border-0 p-0 focus:ring-0 text-sm"
+              placeholder="Add tags (press Enter after each tag)"
+            />
+          </div>
+        </div>
+        
+        <div class="space-y-1">
+          <label for="excerpt" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            Excerpt (optional)
+          </label>
+          <textarea
+            id="excerpt"
+            placeholder="Write a brief summary of your post"
+            rows="3"
+            class="w-full rounded-md border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 shadow-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+          ></textarea>
+          <p class="text-xs text-gray-500 dark:text-gray-400">
+            If left empty, an excerpt will be automatically generated from your content.
+          </p>
+        </div>
+        
+        <div class="space-y-1">
+          <label for="content" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            Content
+          </label>
+          <div class="rounded-md border border-gray-300 dark:border-gray-600 overflow-hidden">
+            <div class="h-80 max-h-80 bg-white dark:bg-gray-800"></div>
+          </div>
+        </div>
+        
+        <div class="flex justify-between pt-4">
+          <div>
+            <button
+              type="button"
+              class="inline-flex items-center justify-center font-medium rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 border border-gray-300 dark:border-gray-600 bg-transparent text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 focus:ring-gray-500 text-base px-4 py-2 mr-3"
+            >
+              <i data-icon="save" class="h-4 w-4 mr-2"></i>
+              Save as Draft
+            </button>
+          </div>
+          <button
+            type="submit"
+            class="inline-flex items-center justify-center font-medium rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500 text-base px-4 py-2"
+          >
+            <i data-icon="send" class="h-4 w-4 mr-2"></i>
+            Publish Post
+          </button>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div class="md:col-span-1">
+          <a href="/" class="text-2xl font-bold text-primary-600 dark:text-primary-400">
+            Blogger
+          </a>
+          <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
+            Share your ideas with the world through beautifully crafted stories.
+          </p>
+        </div>
+        <div>
+          <h3 class="text-sm font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">
+            Explore
+          </h3>
+          <ul class="mt-4 space-y-2">
+            <li>
+              <a href="/" class="text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400">
+                Home
+              </a>
+            </li>
+            <li>
+              <a href="/categories" class="text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400">
+                Categories
+              </a>
+            </li>
+            <li>
+              <a href="/trending" class="text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400">
+                Trending
+              </a>
+            </li>
+            <li>
+              <a href="/bookmarks" class="text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400">
+                Bookmarks
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-sm font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">
+            Company
+          </h3>
+          <ul class="mt-4 space-y-2">
+            <li>
+              <a href="/about" class="text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400">
+                About
+              </a>
+            </li>
+            <li>
+              <a href="/contact" class="text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400">
+                Contact
+              </a>
+            </li>
+            <li>
+              <a href="/privacy" class="text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400">
+                Privacy Policy
+              </a>
+            </li>
+            <li>
+              <a href="/terms" class="text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400">
+                Terms of Service
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-sm font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">
+            Join Us
+          </h3>
+          <ul class="mt-4 space-y-2">
+            <li>
+              <a href="/signup" class="text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400">
+                Create Account
+              </a>
+            </li>
+            <li>
+              <a href="/login" class="text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400">
+                Sign In
+              </a>
+            </li>
+            <li>
+              <a href="/new-post" class="text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400">
+                Write a Story
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
+        <p class="text-sm text-gray-500 dark:text-gray-400 text-center">
+          &copy; 2023 Blogger. All rights reserved.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Basic interactivity
+    document.addEventListener('DOMContentLoaded', function() {
+      // Toggle dark mode
+      const darkModeToggle = document.querySelector('button[aria-label="Toggle dark mode"]');
+      const html = document.documentElement;
+      
+      darkModeToggle.addEventListener('click', function() {
+        html.classList.toggle('dark');
+        const icon = darkModeToggle.querySelector('i');
+        if (html.classList.contains('dark')) {
+          icon.setAttribute('data-icon', 'moon');
+        } else {
+          icon.setAttribute('data-icon', 'sun');
+        }
+      });
+
+      // Mobile menu toggle
+      const mobileMenuButton = document.querySelector('button[aria-label="Main menu"]');
+      mobileMenuButton.addEventListener('click', function() {
+        // This would toggle a mobile menu - implementation would depend on your needs
+        console.log('Mobile menu toggled');
+      });
+
+      // Form submissions
+      const forms = document.querySelectorAll('form');
+      forms.forEach(form => {
+        form.addEventListener('submit', function(e) {
+          e.preventDefault();
+          console.log('Form submitted');
+        });
+      });
+    });
+  </script>
+</body>
+</html>
